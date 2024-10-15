@@ -1,6 +1,9 @@
-C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cw1_serialBuild
-cmake ../cw1
+C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cwBuild
+rmc on the cw1_serial and create a copuy (this is the one you will make changes too), e.g.: cw1_wip
+cmake ../cw1_wip
 cmake build .
 
+once ready to commit RMC on rge cwBuild > Ignore this
+and commit and push
 repo path:
 C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa
