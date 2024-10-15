@@ -11,3 +11,4 @@ Project Build Instructions (for a subfolder unitXX):
 * Run Configure, and just select default compilers, Visual Studio x64 should be the one that appears
 * Run Generate
 * Now, in the Build folder, you should see the solution file (.sln)
+
