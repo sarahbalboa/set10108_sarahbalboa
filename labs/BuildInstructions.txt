@@ -1,5 +1,7 @@
-C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cwBuild
 rmc on the cw1_serial and create a copuy (this is the one you will make changes too), e.g.: cw1_wip
+run this:
+
+C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cwBuild
 cmake ../cw1_wip
 cmake build .
 
