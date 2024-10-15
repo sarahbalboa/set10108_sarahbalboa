@@ -1,8 +1,14 @@
-rmc on the cw1_serial and create a copuy (this is the one you will make changes too), e.g.: cw1_wip
+duplicate the main.cpp file and give it a new name, e,g,: main-v2.cpp
+change the cmake file by adding the following at the end:
+
+add_executable(cw1-mai-v2 main-v2.cpp)
+
+this will create a new executable
+
 run this:
 
 C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cwBuild
-cmake ../cw1_wip
+cmake ../cw1
 cmake build .
 
 once ready to commit RMC on rge cwBuild > Ignore this

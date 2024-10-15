@@ -173,9 +173,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1_serialBuild\cw1.vcxproj">
-      <Project>{3B183FB1-BAF7-3B8D-AB72-8FD65359B4DA}</Project>
-      <Name>cw1</Name>
+    <ProjectReference Include="C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1_serialBuild\cw1-original.vcxproj">
+      <Project>{69B9718A-2847-34D2-B6DF-AB384169453D}</Project>
+      <Name>cw1-original</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1_serialBuild\cw1-serial-chrono.vcxproj">
+      <Project>{4D4655B6-F9CA-33B7-8935-42A49BF492DC}</Project>
+      <Name>cw1-serial-chrono</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
