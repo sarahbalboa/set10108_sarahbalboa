@@ -1,3 +1,6 @@
 C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cw1_serialBuild
 cmake ../cw1
 cmake build .
+
+repo path:
+C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <chrono> // Used for time measurements
 
 std::vector<char> read_file(const char* filename)
 {
@@ -72,18 +73,49 @@ int main()
 {
     // Example chosen file
     const char * filepath = "dataset/shakespeare.txt";
+    const int numRuns = 10;
+    double totalDuration = 0.0;
+
 
     std::vector<char> file_data = read_file(filepath);
     if (file_data.empty())
         return -1;
 
+    // Start total timer
+    auto totalStart = std::chrono::high_resolution_clock::now();
+
     // Example word list
     const char * words[] = {"sword", "fire", "death", "love", "hate", "the", "man", "woman"};
-    for(const char * word : words)
-    {
-        int occurrences = calc_token_occurrences(file_data, word);
-        std::cout << "Found "<< occurrences << " occurrences of word: " << word << std::endl;
+    for (int i = 0; i < numRuns; ++i) {
+
+        // Timing the actual search function
+        auto start = std::chrono::high_resolution_clock::now();
+
+        //run funtion
+        for (const char* word : words)
+        {
+            int occurrences = calc_token_occurrences(file_data, word);
+            if(i == 0) //print output of occurrences only once
+            {
+                std::cout << "Found " << occurrences << " occurrences of word: " << word << std::endl;
+            }
+        }
+
+        //end timer
+        auto end = std::chrono::high_resolution_clock::now();
+
+        //calculate duration
+        std::chrono::duration<double> duration = end - start;
+        totalDuration += duration.count();
+
+        //print run duration
+        std::cout << "Run Number: " << i + 1 <<" - Time: " << duration.count() << " seconds" << std::endl;
     }
+
+    double averageDuration = totalDuration / numRuns;
+
+    //print average duration
+    std::cout << "Average CUDA execution time (" << numRuns <<" times run): " << averageDuration << " seconds" << std::endl;
 
     return 0;
 }
