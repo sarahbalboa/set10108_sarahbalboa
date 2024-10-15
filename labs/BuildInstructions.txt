@@ -1,2 +1,3 @@
-
-notes
+C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cw1_serialBuild
+cmake ../cw1
+cmake build .
