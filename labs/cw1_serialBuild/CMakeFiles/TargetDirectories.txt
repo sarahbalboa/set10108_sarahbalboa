@@ -1,4 +1,0 @@
-C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1_serialBuild/CMakeFiles/cw1-original.dir
-C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1_serialBuild/CMakeFiles/cw1-serial-chrono.dir
-C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1_serialBuild/CMakeFiles/ALL_BUILD.dir
-C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1_serialBuild/CMakeFiles/ZERO_CHECK.dir
