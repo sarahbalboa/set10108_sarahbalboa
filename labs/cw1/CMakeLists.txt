@@ -4,8 +4,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(../contrib)
 
-# Create executable for main.cpp
 add_executable(cw1-original main.cpp)
 
-# Create executable for main2.cpp
 add_executable(cw1-serial-chrono main-serial-chrono.cpp)
+
+
+# Copy the dataset directory to the build directory
+file(COPY ${CMAKE_SOURCE_DIR}/dataset DESTINATION ${CMAKE_BINARY_DIR})

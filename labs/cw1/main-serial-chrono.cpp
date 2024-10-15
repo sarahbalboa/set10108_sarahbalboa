@@ -73,7 +73,8 @@ int main()
 {
     // Example chosen file
     const char * filepath = "dataset/shakespeare.txt";
-    const int numRuns = 10;
+    std::ofstream data("data.csv", std::ofstream::out);
+    const int numRuns = 50;
     double totalDuration = 0.0;
 
 
@@ -107,15 +108,16 @@ int main()
         //calculate duration
         std::chrono::duration<double> duration = end - start;
         totalDuration += duration.count();
-
-        //print run duration
-        std::cout << "Run Number: " << i + 1 <<" - Time: " << duration.count() << " seconds" << std::endl;
+        data << duration.count() << std::endl;
     }
 
     double averageDuration = totalDuration / numRuns;
+    
+
 
     //print average duration
     std::cout << "Average CUDA execution time (" << numRuns <<" times run): " << averageDuration << " seconds" << std::endl;
+    data.close();
 
     return 0;
 }
