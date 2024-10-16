@@ -8,6 +8,5 @@ add_executable(cw1-original main.cpp)
 
 add_executable(cw1-serial-chrono main-serial-chrono.cpp)
 
-
 # Copy the dataset directory to the build directory
 file(COPY ${CMAKE_SOURCE_DIR}/dataset DESTINATION ${CMAKE_BINARY_DIR})

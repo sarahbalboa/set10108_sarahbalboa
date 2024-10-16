@@ -8,6 +8,7 @@ this will create a new executable
 create a new dir cwBuild
 run this:
 
+
 C:\Users\SaraHusseinCelda\Source\Repos\set10108_sarahbalboa\labs\cwBuild
 cmake ../cw1
 cmake build .

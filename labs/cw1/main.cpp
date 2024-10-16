@@ -59,7 +59,7 @@ int calc_token_occurrences(const std::vector<char>& data, const char* token)
         if (iPrefix >= 0 && data[iPrefix] >= 'a' && data[iPrefix] <= 'z')
             continue;
 
-        // test 3: is the prefix a non-letter character?
+        // test 3: is the prefix (sufix?) a non-letter character?
         auto iSuffix = i + tokenLen;
         if (iSuffix < int(data.size()) && data[iSuffix] >= 'a' && data[iSuffix] <= 'z')
             continue;

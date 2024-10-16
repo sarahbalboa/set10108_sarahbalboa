@@ -73,9 +73,9 @@ int main()
 {
     // Example chosen file
     const char * filepath = "dataset/shakespeare.txt";
-    std::ofstream data("data.csv", std::ofstream::out);
+    std::ofstream data("dataSerial.csv", std::ofstream::out);
     const int numRuns = 50;
-    uint64_t totalDuration = 0.0;
+    double totalDuration = 0.0;  
 
     std::vector<char> file_data = read_file(filepath);
     if (file_data.empty())
