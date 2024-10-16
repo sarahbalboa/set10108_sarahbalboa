@@ -109,11 +109,15 @@ int main()
 
     // Example word list
     const char* words[] = { "sword", "fire", "death", "love", "hate", "the", "man", "woman" };
+
+    //calculate the length of a statically allocated array
     int numWords = sizeof(words) / sizeof(words[0]);
 
-    // Transfer file data to device memory
+    //declare data device memory buffer and the file_data size required for device allocation
     char* d_data;
     size_t data_size = file_data.size();
+
+    // Transfer file data to device memory
     cudaMalloc((void**)&d_data, data_size);
     cudaMemcpy(d_data, file_data.data(), data_size, cudaMemcpyHostToDevice);
 
