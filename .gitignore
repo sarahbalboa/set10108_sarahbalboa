@@ -1,3 +1,4 @@
 labs/build/
 /.vs
+/labs/cwBuildCuda
 /labs/cwBuild
