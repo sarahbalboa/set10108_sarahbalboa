@@ -1,4 +1,3 @@
 labs/build/
 /.vs
-/labs/cwBuildCuda
-/labs/cwBuild
+/labs/cwBuildCuda/.vs/set10108-cw1Cuda
