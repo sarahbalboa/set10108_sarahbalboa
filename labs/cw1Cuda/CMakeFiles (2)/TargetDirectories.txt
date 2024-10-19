@@ -1,0 +1,3 @@
+C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1Cuda/CMakeFiles/main-cuda-unoptimized.dir
+C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1Cuda/CMakeFiles/ALL_BUILD.dir
+C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1Cuda/CMakeFiles/ZERO_CHECK.dir

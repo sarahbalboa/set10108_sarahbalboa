@@ -1,12 +1,10 @@
-//single block thread simple
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include <chrono>
+#include <chrono> // Used for time measurements
+#include <cstring>
 #include <cuda_runtime.h>
-
-
 
 std::vector<char> read_file(const char* filename)
 {
@@ -41,130 +39,126 @@ std::vector<char> read_file(const char* filename)
     // Output the number of bytes read
     std::cout << "Successfully read " << buffer.size() << " bytes from the file." << std::endl;
 
-    // convert to lowercase
+    // Convert to lowercase
     std::transform(buffer.begin(), buffer.end(), buffer.begin(), [](char c) { return std::tolower(c); });
 
     return buffer;
 }
 
-// CUDA version of calc_token_occurrences
-__global__ void calc_token_occurrences_CUDA(const char* data, int data_size, const char* token, int token_length, int* numOccurrences)
+// Custom string comparison function for CUDA (works like strncmp)
+__device__ bool compare_token(const char* data, const char* token, int token_len)
 {
-    int count = 0;
+    for (int i = 0; i < token_len; ++i)
+    {
+        if (data[i] != token[i])
+        {
+            return false; // If any character doesn't match, return false
+        }
+    }
+    return true;
+}
 
+// CUDA kernel to calculate token occurrences
+__global__ void calc_token_occurrences_cuda(const char* data, int data_size, const char* token, int token_len, int* result)
+{
+    int numOccurrences = 0;
+
+    // Single thread for simplicity
     for (int i = 0; i < data_size; ++i)
     {
         // test 1: does this match the token?
-        bool match = true;
-        for (int j = 0; j < token_length; ++j)
-        {
-            if (i + j >= data_size || data[i + j] != token[j])
-            {
-                match = false;
-                break;
-            }
-        }
+        if (!compare_token(&data[i], token, token_len))
+            continue;
 
         // test 2: is the prefix a non-letter character?
-        if (match)
-        {
-            bool validPrefix = (i == 0) || (data[i - 1] < 'a' || data[i - 1] > 'z');
-            
-            if (validPrefix)
-            {
-                count++;
-            }
-        }
+        auto iPrefix = i - 1;
+        if (iPrefix >= 0 && data[iPrefix] >= 'a' && data[iPrefix] <= 'z')
+            continue;
 
-        // test 3: is the sufix a non-letter character?
-        if (match)
-        {
-            
-            bool validSuffix = (i + token_length == data_size) || (data[i + token_length] < 'a' || data[i + token_length] > 'z');
+        // test 3: is the suffix a non-letter character?
+        auto iSuffix = i + token_len;
+        if (iSuffix < data_size && data[iSuffix] >= 'a' && data[iSuffix] <= 'z')
+            continue;
 
-            if (validSuffix)
-            {
-                count++;
-            }
-        }
+        // Increment occurrence count
+        numOccurrences++;
     }
 
-    *numOccurrences = count;
+    // Write result back to host
+    *result = numOccurrences;
 }
 
 int main()
 {
     // Example chosen file
     const char* filepath = "dataset/shakespeare.txt";
-    std::ofstream data("dataCudaUnop.csv", std::ofstream::out);
-    const int numRuns = 50;
+    std::ofstream data("dataSerial.csv", std::ofstream::out);
     double totalDuration = 0.0;
 
     std::vector<char> file_data = read_file(filepath);
     if (file_data.empty())
         return -1;
+    // Example word list
+    const char* words[] = { "sword", "fire", "death", "love", "hate", "the", "man", "woman" };
+    
+    //get the file data size for device allocation
+    int data_size = file_data.size();
 
     // Start total timer
     auto totalStart = std::chrono::high_resolution_clock::now();
 
-    // Example word list
-    const char* words[] = { "sword", "fire", "death", "love", "hate", "the", "man", "woman" };
-
-    //calculate the length of a statically allocated array
-    int numWords = sizeof(words) / sizeof(words[0]);
-
-    //declare data device memory buffer and the file_data size required for device allocation
+    // Allocate device memory for the file data
     char* d_data;
-    size_t data_size = file_data.size();
+    cudaMalloc((void**)&d_data, data_size * sizeof(char));
+    //copy the file data from host memory to device memory 
+    cudaMemcpy(d_data, file_data.data(), data_size * sizeof(char), cudaMemcpyHostToDevice);
 
-    // Transfer file data to device memory
-    cudaMalloc((void**)&d_data, data_size);
-    cudaMemcpy(d_data, file_data.data(), data_size, cudaMemcpyHostToDevice);
+    
 
-    // Allocate memory for occurrences result on device
-    int* d_numOccurrences;
-    cudaMalloc((void**)&d_numOccurrences, sizeof(int));
+    for (const char* word : words)
+    {
+        int token_len = strlen(word);
+        int* d_occurrences;
+        int occurrences;
 
-    for (int i = 0; i < numRuns; ++i) {
-        // Timing the actual search function
+        // Allocate memory for the result on the device
+        cudaMalloc((void**)&d_occurrences, sizeof(int));
+
+        // Copy the token to the device
+        char* d_token;
+        cudaMalloc((void**)&d_token, token_len * sizeof(char));
+        cudaMemcpy(d_token, word, token_len * sizeof(char), cudaMemcpyHostToDevice);
+
+        //start timer ---------------------------------------------------------------------------------
         auto start = std::chrono::high_resolution_clock::now();
-
-        // Run token search for each word
-        for (const char* word : words) {
-            int token_length = strlen(word);
-
-            // Call the CUDA kernel with 1 block and 1 thread
-            calc_token_occurrences_CUDA <<<1, 1 >>>(d_data, data_size, word, token_length, d_numOccurrences);
-
-            // Wait for GPU to finish execution
-            cudaDeviceSynchronize();
-
-            // Get result back from device
-            int numOccurrences;
-            cudaMemcpy(&numOccurrences, d_numOccurrences, sizeof(int), cudaMemcpyDeviceToHost);
-
-            if (i == 0) { // Print result only for the first run
-                std::cout << "Found " << numOccurrences << " occurrences of word: " << word << std::endl;
-            }
-        }
-
-        // End timer
+        // Launch CUDA kernel with 1 block and 1 thread (single-threaded execution)
+        calc_token_occurrences_cuda << <1, 1 >> > (d_data, data_size, d_token, token_len, d_occurrences);
+        //nd timer ---------------------------------------------------------------------------------
         auto end = std::chrono::high_resolution_clock::now();
 
-        // Calculate duration
+        // Copy the result back to the host
+        cudaMemcpy(&occurrences, d_occurrences, sizeof(int), cudaMemcpyDeviceToHost);
+
+       
+        // Free the device memory for this word
+        cudaFree(d_token);
+        cudaFree(d_occurrences);
+
+        std::cout << "Found " << occurrences << " occurrences of word: " << word << std::endl;
+        
         std::chrono::duration<double> duration = end - start;
         totalDuration += duration.count();
         data << duration.count() << std::endl;
     }
 
-    double averageDuration = totalDuration / numRuns;
+        double averageDuration = totalDuration; // / numRuns;
 
     // Print average duration
-    std::cout << "Average CUDA execution time (" << numRuns << " times run): " << averageDuration << " seconds" << std::endl;
+    std::cout << "Average CUDA execution time (" << 1 << " times run): " << averageDuration << " seconds" << std::endl;
 
     // Free device memory
     cudaFree(d_data);
-    cudaFree(d_numOccurrences);
+
     data.close();
 
     return 0;

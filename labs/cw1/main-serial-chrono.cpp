@@ -88,7 +88,7 @@ int main()
     const char * words[] = {"sword", "fire", "death", "love", "hate", "the", "man", "woman"};
     for (int i = 0; i < numRuns; ++i) {
 
-        // Timing the actual search function
+        // Start Timing the actual search function
         auto start = std::chrono::high_resolution_clock::now();
 
         //run funtion
