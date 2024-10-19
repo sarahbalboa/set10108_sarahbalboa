@@ -1,0 +1,26 @@
+﻿  Building Custom Rule C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cw1Cuda/CMakeLists.txt
+  Compiling CUDA source file ..\cw1Cuda\main-cuda-optimised1.cu...
+  
+  C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cwBuildCuda>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64" -x cu -rdc=true  -IC:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1Cuda\..\contrib -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"     --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static -std=c++17 -Xcompiler="/EHsc -Zi -Ob0" -g  -D_WINDOWS -D"CMAKE_INTDIR=\"Debug\"" -D_MBCS -D"CMAKE_INTDIR=\"Debug\"" -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd /GR" -Xcompiler "/Fdmain-cuda-optimised1.dir\Debug\vc143.pdb" -o main-cuda-optimised1.dir\Debug\main-cuda-optimised1.obj "C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1Cuda\main-cuda-optimised1.cu" 
+  main-cuda-optimised1.cu
+  tmpxft_00002f20_00000000-7_main-cuda-optimised1.cudafe1.cpp
+C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1Cuda\main-cuda-optimised1.cu(121): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cw1Cuda\main-cuda-optimised1.cu(139): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  
+  C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cwBuildCuda>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -dlink  -o main-cuda-optimised1.dir\Debug\main-cuda-optimised1.device-link.obj -Xcompiler "/EHsc /W3 /nologo /Od /Zi /RTC1 /MDd /GR" -Xcompiler "/Fdmain-cuda-optimised1.dir\Debug\vc143.pdb" -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin/crt" -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\lib\x64" cudadevrt.lib cudart_static.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib -forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets -D_WINDOWS -Xcompiler="/W3 /GR /EHsc" -Xcompiler="-MDd  -Zi -Ob0 -Od /RTC1"    "main-cuda-optimised1.dir\Debug\main-cuda-optimised1.obj" 
+  cudadevrt.lib
+  cudart_static.lib
+  kernel32.lib
+  user32.lib
+  gdi32.lib
+  winspool.lib
+  shell32.lib
+  ole32.lib
+  oleaut32.lib
+  uuid.lib
+  comdlg32.lib
+  advapi32.lib
+  main-cuda-optimised1.obj
+     Creating library C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cwBuildCuda/Debug/main-cuda-optimised1.lib and object C:/Users/SaraHusseinCelda/source/repos/set10108_sarahbalboa/labs/cwBuildCuda/Debug/main-cuda-optimised1.exp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  main-cuda-optimised1.vcxproj -> C:\Users\SaraHusseinCelda\source\repos\set10108_sarahbalboa\labs\cwBuildCuda\Debug\main-cuda-optimised1.exe

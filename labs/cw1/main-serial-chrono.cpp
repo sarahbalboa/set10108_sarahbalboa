@@ -73,8 +73,9 @@ int main()
 {
     // Example chosen file
     const char * filepath = "dataset/shakespeare.txt";
-    std::ofstream data("dataSerial.csv", std::ofstream::out);
-    const int numRuns = 50;
+    const int numRuns = 3; // Number of iterations
+
+    std::ofstream iterationData("iterationTimeSerial.csv", std::ofstream::out); // Open CSV for iteration times
     double totalDuration = 0.0;  
 
     std::vector<char> file_data = read_file(filepath);
@@ -106,8 +107,11 @@ int main()
 
         //calculate duration
         std::chrono::duration<double> duration = end - start;
+
+
+        // Record the time for this iteration in the CSV file
+        iterationData << "Iteration " << numRuns + 1 << ", " << duration.count() << " seconds" << std::endl;
         totalDuration += duration.count();
-        data << duration.count() << std::endl;
     }
 
     double averageDuration = totalDuration / numRuns;
@@ -116,7 +120,8 @@ int main()
 
     //print average duration
     std::cout << "Average CUDA execution time (" << numRuns <<" times run): " << averageDuration << " seconds" << std::endl;
-    data.close();
+
+    iterationData.close(); // Close the CSV file
 
     return 0;
 }
