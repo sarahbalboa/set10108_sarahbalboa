@@ -92,9 +92,9 @@ int main()
 {
     // Example chosen file
     const char* filepath = "dataset/shakespeare.txt";
-    std::ofstream data("dataSerial.csv", std::ofstream::out);
+    std::ofstream data("dataUnop.csv", std::ofstream::out);
     double totalDuration = 0.0;
-
+     
     std::vector<char> file_data = read_file(filepath);
     if (file_data.empty())
         return -1;
